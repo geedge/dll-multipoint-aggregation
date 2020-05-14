@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  flume:
+    image: 192.168.40.153:9080/tsg/flume:1.9.0
+    restart: always
+    container_name: flume
+    volumes:
+    - "/home/tsg3.0-volumes/flume/conf:/home/apache-flume-1.9.0-bin/conf"
+    - "/home/tsg3.0-volumes/flume/flumeController:/home/apache-flume-1.9.0-bin/flumeController"
+    - "/home/tsg3.0-volumes/flume/json:/home/test"
+    - "/home/tsg3.0-volumes/flume/data:/home/192.168.60.101"
+    - "/home/tsg3.0-volumes/flume/flumeMonitor:/home/apache-flume-1.9.0-bin/flumeMonitor"
+    - "/etc/localtime:/etc/localtime:ro"
+    - "/etc/timezone:/etc/timezone:ro"
+    network_mode: "host"
