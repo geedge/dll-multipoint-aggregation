@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  flume:
+{% if offline_install %}
+    image: {{ image_name }}:{{ image_tag_name }}
+{% else %}
+    image: {{ docker_registry_image_and_tag }}
+{% endif %}
+    restart: always
+    container_name: {{ image_container_name }}
+    environment:
+      MACHINE1: {{ MACHINE1 }}
+      MACHINE2: {{ MACHINE2 }}
+      MACHINE3: {{ MACHINE3 }}
+      MACHINE4: {{ MACHINE4 }}
+      MACHINE5: {{ MACHINE5 }}
+      MACHINE6: {{ MACHINE6 }}
+      MACHINE7: {{ MACHINE7 }}
+      MACHINE8: {{ MACHINE8 }}
+      MACHINE9: {{ MACHINE9 }}
+      MACHINE10: {{ MACHINE10 }}
+      MACHINE11: {{ MACHINE11 }}
+      MACHINE12: {{ MACHINE12 }}
+      MACHINE13: {{ MACHINE13 }}
+      SESPROCESSNUM: 1
+      SESPORTBEGIN: 35000
+      KAFKA_ADDR: {{ kafka_addr }}
+    volumes:
+    - "{{ volume_path }}/tsg3.0-volumes/flume/conf:/home/apache-flume-1.9.0-bin/conf"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/flumeController:/home/apache-flume-1.9.0-bin/flumeController"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/flumeMonitor:/home/apache-flume-1.9.0-bin/flumeMonitor"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/plugins.d:/home/apache-flume-1.9.0-bin/plugins.d"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/dat/:/home/dat/"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/json:/home/json"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/data:/home/data"
+    - "/etc/localtime:/etc/localtime:ro"
+    - "/etc/timezone:/etc/timezone:ro"
+    network_mode: "host"
+

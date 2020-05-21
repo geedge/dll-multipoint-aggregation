@@ -1,0 +1,201 @@
+14 May 2020 11:46:42,409 INFO  [lifecycleSupervisor-1-0] (org.apache.flume.node.PollingPropertiesFileConfigurationProvider.start:62)  - Configuration provider starting
+14 May 2020 11:46:42,421 INFO  [conf-file-poller-0] (org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run:138)  - Reloading configuration file:/home/apache-flume-1.9.0-bin/conf/connection/connection_k2f.properties
+14 May 2020 11:46:42,431 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,433 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,433 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,434 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,434 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,435 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,435 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addProperty:1117)  - Added sinks: k1 Agent: connection
+14 May 2020 11:46:42,435 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,436 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,436 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,436 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,437 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,437 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:k1
+14 May 2020 11:46:42,438 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,440 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,440 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,441 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.addComponentConfig:1203)  - Processing:c1
+14 May 2020 11:46:42,441 WARN  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.validateConfigFilterSet:623)  - Agent configuration for 'connection' has no configfilters.
+14 May 2020 11:46:42,464 WARN  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration$AgentConfiguration.validateSources:702)  - Agent configuration for 'connection' has no sources.
+14 May 2020 11:46:42,469 INFO  [conf-file-poller-0] (org.apache.flume.conf.FlumeConfiguration.validateConfiguration:163)  - Post-validation flume configuration contains configuration for agents: [connection]
+14 May 2020 11:46:42,469 INFO  [conf-file-poller-0] (org.apache.flume.node.AbstractConfigurationProvider.loadChannels:151)  - Creating channels
+14 May 2020 11:46:42,481 INFO  [conf-file-poller-0] (org.apache.flume.channel.DefaultChannelFactory.create:42)  - Creating instance of channel c1 type org.apache.flume.channel.kafka.KafkaChannel
+14 May 2020 11:46:42,503 INFO  [conf-file-poller-0] (org.apache.flume.node.AbstractConfigurationProvider.loadChannels:205)  - Created channel c1
+14 May 2020 11:46:42,504 INFO  [conf-file-poller-0] (org.apache.flume.sink.DefaultSinkFactory.create:42)  - Creating instance of sink: k1, type: file_roll
+14 May 2020 11:46:42,514 INFO  [conf-file-poller-0] (org.apache.flume.node.AbstractConfigurationProvider.getConfiguration:120)  - Channel c1 connected to [k1]
+14 May 2020 11:46:42,524 INFO  [conf-file-poller-0] (org.apache.flume.node.Application.startAllComponents:162)  - Starting new configuration:{ sourceRunners:{} sinkRunners:{k1=SinkRunner: { policy:org.apache.flume.sink.DefaultSinkProcessor@5cf2aeb7 counterGroup:{ name:null counters:{} } }} channels:{c1=org.apache.flume.channel.kafka.KafkaChannel{name: c1}} }
+14 May 2020 11:46:42,525 INFO  [conf-file-poller-0] (org.apache.flume.node.Application.startAllComponents:169)  - Starting Channel c1
+14 May 2020 11:46:42,526 INFO  [lifecycleSupervisor-1-0] (org.apache.flume.channel.kafka.KafkaChannel.start:135)  - Starting Kafka Channel: c1
+14 May 2020 11:46:42,562 INFO  [lifecycleSupervisor-1-0] (org.apache.kafka.common.config.AbstractConfig.logAll:279)  - ProducerConfig values: 
+	acks = all
+	batch.size = 16384
+	bootstrap.servers = [192.168.40.152:9092]
+	buffer.memory = 33554432
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	enable.idempotence = false
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 0
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.ByteArraySerializer
+
+14 May 2020 11:46:42,638 INFO  [lifecycleSupervisor-1-0] (org.apache.kafka.common.utils.AppInfoParser$AppInfo.<init>:109)  - Kafka version : 2.0.1
+14 May 2020 11:46:42,639 INFO  [lifecycleSupervisor-1-0] (org.apache.kafka.common.utils.AppInfoParser$AppInfo.<init>:110)  - Kafka commitId : fa14705e51bd2ce5
+14 May 2020 11:46:42,641 INFO  [lifecycleSupervisor-1-0] (org.apache.flume.channel.kafka.KafkaChannel.start:143)  - Topic = CONNECTION-RECORD-LOG
+14 May 2020 11:46:42,641 INFO  [lifecycleSupervisor-1-0] (org.apache.flume.instrumentation.MonitoredCounterGroup.register:119)  - Monitored counter group for type: CHANNEL, name: c1: Successfully registered new MBean.
+14 May 2020 11:46:42,642 INFO  [lifecycleSupervisor-1-0] (org.apache.flume.instrumentation.MonitoredCounterGroup.start:95)  - Component type: CHANNEL, name: c1 started
+14 May 2020 11:46:42,642 INFO  [conf-file-poller-0] (org.apache.flume.node.Application.startAllComponents:196)  - Starting Sink k1
+14 May 2020 11:46:42,643 INFO  [lifecycleSupervisor-1-1] (org.apache.flume.sink.RollingFileSink.start:111)  - Starting org.apache.flume.sink.RollingFileSink{name:k1, channel:c1}...
+14 May 2020 11:46:42,644 INFO  [lifecycleSupervisor-1-1] (org.apache.flume.instrumentation.MonitoredCounterGroup.register:119)  - Monitored counter group for type: SINK, name: k1: Successfully registered new MBean.
+14 May 2020 11:46:42,644 INFO  [lifecycleSupervisor-1-1] (org.apache.flume.instrumentation.MonitoredCounterGroup.start:95)  - Component type: SINK, name: k1 started
+14 May 2020 11:46:42,645 INFO  [lifecycleSupervisor-1-1] (org.apache.flume.sink.RollingFileSink.start:143)  - RollingFileSink k1 started.
+14 May 2020 11:46:42,661 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.common.config.AbstractConfig.logAll:279)  - ConsumerConfig values: 
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [192.168.40.152:9092]
+	check.crcs = true
+	client.id = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 1000
+	fetch.min.bytes = 1048576
+	group.id = lxk_0514
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+14 May 2020 11:46:42,696 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.common.utils.AppInfoParser$AppInfo.<init>:109)  - Kafka version : 2.0.1
+14 May 2020 11:46:42,697 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.common.utils.AppInfoParser$AppInfo.<init>:110)  - Kafka commitId : fa14705e51bd2ce5
+14 May 2020 11:46:42,700 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.KafkaChannel.createConsumerAndRecords:304)  - Created new consumer to connect to Kafka
+14 May 2020 11:46:42,870 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.Metadata.update:285)  - Cluster ID: gsZT8xNUSViLGeSpG1neHg
+14 May 2020 11:46:42,871 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$FindCoordinatorResponseHandler.onSuccess:677)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Discovered group coordinator 192.168.40.152:9092 (id: 2147483646 rack: null)
+14 May 2020 11:46:42,873 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinPrepare:472)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Revoking previously assigned partitions []
+14 May 2020 11:46:42,873 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator.sendJoinGroupRequest:509)  - [Consumer clientId=consumer-1, groupId=lxk_0514] (Re-)joining group
+14 May 2020 11:46:42,887 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$1.onSuccess:473)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Successfully joined group with generation 18
+14 May 2020 11:46:42,888 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete:280)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Setting newly assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 11:46:42,889 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsAssigned:792)  - topic CONNECTION-RECORD-LOG - partition 0 assigned.
+14 May 2020 11:46:45,901 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatResponseHandler.handle:855)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Attempt to heartbeat failed since group is rebalancing
+14 May 2020 11:46:45,910 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinPrepare:472)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Revoking previously assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 11:46:45,910 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsRevoked:785)  - topic CONNECTION-RECORD-LOG - partition 0 revoked.
+14 May 2020 11:46:45,911 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator.sendJoinGroupRequest:509)  - [Consumer clientId=consumer-1, groupId=lxk_0514] (Re-)joining group
+14 May 2020 11:46:45,921 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$1.onSuccess:473)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Successfully joined group with generation 19
+14 May 2020 11:46:45,922 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete:280)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Setting newly assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 11:46:45,923 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsAssigned:792)  - topic CONNECTION-RECORD-LOG - partition 0 assigned.
+14 May 2020 11:51:42,641 INFO  [kafka-producer-network-thread | producer-1] (org.apache.kafka.clients.Metadata.update:285)  - Cluster ID: gsZT8xNUSViLGeSpG1neHg
+14 May 2020 12:02:48,119 INFO  [kafka-coordinator-heartbeat-thread | lxk_0514] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatResponseHandler.handle:855)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Attempt to heartbeat failed since group is rebalancing
+14 May 2020 12:02:48,715 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinPrepare:472)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Revoking previously assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 12:02:48,716 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsRevoked:785)  - topic CONNECTION-RECORD-LOG - partition 0 revoked.
+14 May 2020 12:02:48,717 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator.sendJoinGroupRequest:509)  - [Consumer clientId=consumer-1, groupId=lxk_0514] (Re-)joining group
+14 May 2020 12:02:54,224 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$1.onSuccess:473)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Successfully joined group with generation 20
+14 May 2020 12:02:54,225 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete:280)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Setting newly assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 12:02:54,225 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsAssigned:792)  - topic CONNECTION-RECORD-LOG - partition 0 assigned.
+14 May 2020 12:02:57,326 INFO  [kafka-coordinator-heartbeat-thread | lxk_0514] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatResponseHandler.handle:855)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Attempt to heartbeat failed since group is rebalancing
+14 May 2020 12:02:59,720 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinPrepare:472)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Revoking previously assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 12:02:59,721 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsRevoked:785)  - topic CONNECTION-RECORD-LOG - partition 0 revoked.
+14 May 2020 12:02:59,722 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator.sendJoinGroupRequest:509)  - [Consumer clientId=consumer-1, groupId=lxk_0514] (Re-)joining group
+14 May 2020 12:02:59,729 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.AbstractCoordinator$1.onSuccess:473)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Successfully joined group with generation 21
+14 May 2020 12:02:59,730 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete:280)  - [Consumer clientId=consumer-1, groupId=lxk_0514] Setting newly assigned partitions [CONNECTION-RECORD-LOG-0]
+14 May 2020 12:02:59,730 INFO  [SinkRunner-PollingRunner-DefaultSinkProcessor] (org.apache.flume.channel.kafka.ChannelRebalanceListener.onPartitionsAssigned:792)  - topic CONNECTION-RECORD-LOG - partition 0 assigned.

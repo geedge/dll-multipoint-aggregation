@@ -1,0 +1,76 @@
+#为source channel  sink起名
+plconnrecord.sources = kafkasource1
+plconnrecord.channels = channel1
+plconnrecord.sinks = kafkasink1
+#指定source收集到的数据发送到哪个管道
+plconnrecord.sources.kafkasource1.channels = channel1
+#指定source数据收集策略
+plconnrecord.sources.kafkasource1.type = org.apache.flume.source.kafka.KafkaSource
+plconnrecord.sources.kafkasource1.batchSize = 30000
+plconnrecord.sources.kafkasource1.batchDurationMillis = 1000
+plconnrecord.sources.kafkasource1.kafka.bootstrap.servers = {{ machine_host }}:9092
+plconnrecord.sources.kafkasource1.kafka.topics = CONNECTION-RECORD-LOG
+plconnrecord.sources.kafkasource1.kafka.consumer.group.id = testconnin_1
+
+#指定channel为memory,即表示所有的数据都装进memory当中
+plconnrecord.channels.channel1.type = memory
+plconnrecord.channels.channel1.capacity = 2000000
+plconnrecord.channels.channel1.transactionCapacity = 30000
+plconnrecord.channels.channel1.byteCapacityBufferPercentage = 40
+plconnrecord.channels.channel1.byteCapacity = 2147483648
+
+#指定sink为file roll sink
+plconnrecord.sinks.kafkasink1.type = file_roll
+plconnrecord.sinks.kafkasink1.channel = channel1
+plconnrecord.sinks.kafkasink1.sink.pathManager = default
+plconnrecord.sinks.kafkasink1.sink.pathManager.extension = dat
+plconnrecord.sinks.kafkasink1.sink.pathManager.prefix = connection-
+plconnrecord.sinks.kafkasink1.sink.rollInterval = 10
+plconnrecord.sinks.kafkasink1.sink.directory = /home/{{ machine_host }}/CONNECTION-RECORD-COMPLETED-LOG
+
+#拦截器批量设置
+#zx
+#plconnrecord.sources.kafkasource1.interceptors = i1 i4
+#plconnrecord.sources.kafkasource1.interceptors = i5 i6
+plconnrecord.sources.kafkasource1.interceptors = i6
+#拦截器-1-定位库
+plconnrecord.sources.kafkasource1.interceptors.i1.type = cn.ac.iie.flume.interceptor.FlumeIPAsnApp$FlumeIpAsnAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i1.ipDat = /home/dat/Kazakhstan.mmdb
+plconnrecord.sources.kafkasource1.interceptors.i1.v4Asn = /home/dat/asn_v4.mmdb
+plconnrecord.sources.kafkasource1.interceptors.i1.v6Asn = /home/dat/asn_v6.mmdb
+plconnrecord.sources.kafkasource1.interceptors.i1.serveripField = common_server_ip
+plconnrecord.sources.kafkasource1.interceptors.i1.clientipField = common_client_ip
+plconnrecord.sources.kafkasource1.interceptors.i1.serverlocatField = common_server_location
+plconnrecord.sources.kafkasource1.interceptors.i1.clientlocatField = common_client_location
+plconnrecord.sources.kafkasource1.interceptors.i1.serverasnField = common_server_asn
+plconnrecord.sources.kafkasource1.interceptors.i1.clientasnField = common_client_asn
+#plconnrecord.sources.kafkasource1.interceptors.i1.customipField = nocusipfield
+#plconnrecord.sources.kafkasource1.interceptors.i1.customlocatField = nocuslocatfield
+#plconnrecord.sources.kafkasource1.interceptors.i1.customasnField = nocusasnfield
+#拦截器-2-域名
+plconnrecord.sources.kafkasource1.interceptors.i2.type = cn.ac.iie.flume.interceptor.FlumeDomainApp$FlumeDomainAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i2.domainField = domain
+#拦截器-3-分布式ID与时间戳
+plconnrecord.sources.kafkasource1.interceptors.i3.type = cn.ac.iie.flume.interceptor.FlumeUidApp$FlumeUidAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i3.uId = uid
+plconnrecord.sources.kafkasource1.interceptors.i3.zookeeperIp = {{ machine_host }}:2181
+plconnrecord.sources.kafkasource1.interceptors.i3.kafkaTopic = SESSION-TEST-LOG
+plconnrecord.sources.kafkasource1.interceptors.i3.timeStamp = recv_time
+plconnrecord.sources.kafkasource1.interceptors.i3.dataCenterIdNum = 15
+#拦截器-4-app_label截取映射
+plconnrecord.sources.kafkasource1.interceptors.i4.type = cn.ac.iie.flume.interceptor.FlumeFieldSplitterApp$FlumeFieldSplitterAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i4.handleField = app_label
+plconnrecord.sources.kafkasource1.interceptors.i4.splitFields = proto:PROTO_ID;app:APP_ID;web:WEB_ID
+plconnrecord.sources.kafkasource1.interceptors.i4.fieldsSeparator = ;
+plconnrecord.sources.kafkasource1.interceptors.i4.fieldDelimiter = =
+#拦截器-5-avro反序列化
+plconnrecord.sources.kafkasource1.interceptors.i5.type = com.zdjizhi.flume.interceptor.FlumeAvroDeserialiApp$FlumeAvroDeserialiAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i5.avroSchemaUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/connection_record_log
+#拦截器-6-动态补全
+plconnrecord.sources.kafkasource1.interceptors.i6.type = com.zdjizhi.flume.interceptor.FlumeDynamicApp$FlumeDynamicAppBuilder
+plconnrecord.sources.kafkasource1.interceptors.i6.schemaHttpUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/connection_record_log
+plconnrecord.sources.kafkasource1.interceptors.i6.uidZookeeperIp = {{ machine_host }}:2181
+plconnrecord.sources.kafkasource1.interceptors.i6.dataCenterIdNum = 0
+plconnrecord.sources.kafkasource1.interceptors.i6.ipDatPath = /home/dat
+plconnrecord.sources.kafkasource1.interceptors.i6.hbaseZookeeperIp = {{ machine_host }}:2181
+plconnrecord.sources.kafkasource1.interceptors.i6.hbaseTableName = subscriber_info

@@ -1,0 +1,22 @@
+#为source channel  sink起名
+traffic.channels = c1
+traffic.sinks = k1
+#指定channel为kafka channel,省略source使得效率更高
+traffic.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
+traffic.channels.c1.kafka.bootstrap.servers = {{ machine_host }}:9092
+traffic.channels.c1.kafka.topic = TRAFFIC-METRICS-LOG
+traffic.channels.c1.kafka.consumer.group.id = lxk_0514
+traffic.channels.c1.kafka.consumer.auto.offset.reset = latest
+traffic.channels.c1.kafka.consumer.enable.auto.commit = true
+traffic.channels.c1.kafka.consumer.fetch.max.wait.ms = 1000
+traffic.channels.c1.kafka.consumer.fetch.min.bytes = 1048576
+traffic.channels.c1.parseAsFlumeEvent = false
+
+#原始file roll sink，将数据写到本机磁盘
+traffic.sinks.k1.type = file_roll
+traffic.sinks.k1.channel = c1
+traffic.sinks.k1.sink.pathManager = default
+traffic.sinks.k1.sink.pathManager.extension = dat
+traffic.sinks.k1.sink.pathManager.prefix = traffic-
+traffic.sinks.k1.sink.rollInterval = 10
+traffic.sinks.k1.sink.directory = /home/{{ machine_host }}/TRAFFIC-METRICS-LOG

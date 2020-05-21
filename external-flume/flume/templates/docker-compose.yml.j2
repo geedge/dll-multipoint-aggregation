@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  flume:
+{% if offline_install %}
+    image: {{ image_name }}:{{ image_tag_name }}
+{% else %}
+    image: {{ docker_registry_image_and_tag }}
+{% endif %}
+    restart: always
+    container_name: {{ image_container_name }}
+    environment:
+      SESPROCESSNUM: 1
+      SESPORTBEGIN: 35000
+    volumes:
+    - "{{ volume_path }}/tsg3.0-volumes/flume/conf:/home/apache-flume-1.9.0-bin/conf"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/flumeController:/home/apache-flume-1.9.0-bin/flumeController"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/flumeMonitor:/home/apache-flume-1.9.0-bin/flumeMonitor"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/plugins.d:/home/apache-flume-1.9.0-bin/plugins.d"
+    - "{{ volume_path }}/tsg3.0-volumes/flume/dat/:/home/dat/"
+    - "/etc/localtime:/etc/localtime:ro"
+    - "/etc/timezone:/etc/timezone:ro"
+    network_mode: "host"
+

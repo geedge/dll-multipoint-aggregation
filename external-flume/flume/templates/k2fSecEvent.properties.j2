@@ -1,0 +1,75 @@
+#为source channel  sink起名
+plsecevent.sources = kafkasource1
+plsecevent.channels = channel1
+plsecevent.sinks = kafkasink1
+#指定source收集到的数据发送到哪个管道
+plsecevent.sources.kafkasource1.channels = channel1
+#指定source数据收集策略
+plsecevent.sources.kafkasource1.type = org.apache.flume.source.kafka.KafkaSource
+plsecevent.sources.kafkasource1.batchSize = 30000
+plsecevent.sources.kafkasource1.batchDurationMillis = 1000
+plsecevent.sources.kafkasource1.kafka.bootstrap.servers = {{ machine_host }}:9092
+plsecevent.sources.kafkasource1.kafka.topics = SECURITY-EVENT-LOG
+plsecevent.sources.kafkasource1.kafka.consumer.group.id = testsecin_1
+
+#指定channel为memory,即表示所有的数据都装进memory当中
+plsecevent.channels.channel1.type = memory
+plsecevent.channels.channel1.capacity = 2000000
+plsecevent.channels.channel1.transactionCapacity = 30000
+plsecevent.channels.channel1.byteCapacityBufferPercentage = 40
+plsecevent.channels.channel1.byteCapacity = 2147483648
+#原始file roll sink
+plsecevent.sinks.kafkasink1.type = file_roll
+plsecevent.sinks.kafkasink1.channel = channel1
+plsecevent.sinks.kafkasink1.sink.pathManager = default
+plsecevent.sinks.kafkasink1.sink.pathManager.extension = dat
+plsecevent.sinks.kafkasink1.sink.pathManager.prefix = security-
+plsecevent.sinks.kafkasink1.sink.rollInterval = 10
+plsecevent.sinks.kafkasink1.sink.directory = /home/{{ machine_host }}/SECURITY-EVENT-COMPLETED-LOG
+
+#拦截器批量设置
+#zx
+#plsecevent.sources.kafkasource1.interceptors = i1 i4
+#plsecevent.sources.kafkasource1.interceptors = i5 i6
+plsecevent.sources.kafkasource1.interceptors = i6
+#拦截器-1-定位库
+plsecevent.sources.kafkasource1.interceptors.i1.type = cn.ac.iie.flume.interceptor.FlumeIPAsnApp$FlumeIpAsnAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i1.ipDat = /home/dat/Kazakhstan.mmdb
+plsecevent.sources.kafkasource1.interceptors.i1.v4Asn = /home/dat/asn_v4.mmdb
+plsecevent.sources.kafkasource1.interceptors.i1.v6Asn = /home/dat/asn_v6.mmdb
+plsecevent.sources.kafkasource1.interceptors.i1.serveripField = common_server_ip
+plsecevent.sources.kafkasource1.interceptors.i1.clientipField = common_client_ip
+plsecevent.sources.kafkasource1.interceptors.i1.serverlocatField = common_server_location
+plsecevent.sources.kafkasource1.interceptors.i1.clientlocatField = common_client_location
+plsecevent.sources.kafkasource1.interceptors.i1.serverasnField = common_server_asn
+plsecevent.sources.kafkasource1.interceptors.i1.clientasnField = common_client_asn
+#plsecevent.sources.kafkasource1.interceptors.i1.customipField = nocusipfield
+#plsecevent.sources.kafkasource1.interceptors.i1.customlocatField = nocuslocatfield
+#plsecevent.sources.kafkasource1.interceptors.i1.customasnField = nocusasnfield
+#拦截器-2-域名
+plsecevent.sources.kafkasource1.interceptors.i2.type = cn.ac.iie.flume.interceptor.FlumeDomainApp$FlumeDomainAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i2.domainField = domain
+#拦截器-3-分布式ID与时间戳
+plsecevent.sources.kafkasource1.interceptors.i3.type = cn.ac.iie.flume.interceptor.FlumeUidApp$FlumeUidAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i3.uId = uid
+plsecevent.sources.kafkasource1.interceptors.i3.zookeeperIp = {{ machine_host }}:2181
+plsecevent.sources.kafkasource1.interceptors.i3.kafkaTopic = SESSION-TEST-LOG
+plsecevent.sources.kafkasource1.interceptors.i3.timeStamp = recv_time
+plsecevent.sources.kafkasource1.interceptors.i3.dataCenterIdNum = 15
+#拦截器-4-app_label截取映射
+plsecevent.sources.kafkasource1.interceptors.i4.type = cn.ac.iie.flume.interceptor.FlumeFieldSplitterApp$FlumeFieldSplitterAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i4.handleField = app_label
+plsecevent.sources.kafkasource1.interceptors.i4.splitFields = proto:PROTO_ID;app:APP_ID;web:WEB_ID
+plsecevent.sources.kafkasource1.interceptors.i4.fieldsSeparator = ;
+plsecevent.sources.kafkasource1.interceptors.i4.fieldDelimiter = =
+#拦截器-5-avro反序列化
+plsecevent.sources.kafkasource1.interceptors.i5.type = com.zdjizhi.flume.interceptor.FlumeAvroDeserialiApp$FlumeAvroDeserialiAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i5.avroSchemaUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/security_event_log
+#拦截器-6-动态补全
+plsecevent.sources.kafkasource1.interceptors.i6.type = com.zdjizhi.flume.interceptor.FlumeDynamicApp$FlumeDynamicAppBuilder
+plsecevent.sources.kafkasource1.interceptors.i6.schemaHttpUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/security_event_log
+plsecevent.sources.kafkasource1.interceptors.i6.uidZookeeperIp = {{ machine_host }}:2181
+plsecevent.sources.kafkasource1.interceptors.i6.dataCenterIdNum = 3
+plsecevent.sources.kafkasource1.interceptors.i6.ipDatPath = /home/dat
+plsecevent.sources.kafkasource1.interceptors.i6.hbaseZookeeperIp = {{ machine_host }}:2181
+plsecevent.sources.kafkasource1.interceptors.i6.hbaseTableName = subscriber_info

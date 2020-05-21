@@ -1,0 +1,75 @@
+#为source channel  sink起名
+plactdef.sources = kafkasource1
+plactdef.channels = channel1
+plactdef.sinks = kafkasink1
+#指定source收集到的数据发送到哪个管道
+plactdef.sources.kafkasource1.channels = channel1
+#指定source数据收集策略
+plactdef.sources.kafkasource1.type = org.apache.flume.source.kafka.KafkaSource
+plactdef.sources.kafkasource1.batchSize = 30000
+plactdef.sources.kafkasource1.batchDurationMillis = 1000
+plactdef.sources.kafkasource1.kafka.bootstrap.servers = {{ machine_host }}:9092
+plactdef.sources.kafkasource1.kafka.topics = ACTIVE-DEFENCE-EVENT-LOG
+plactdef.sources.kafkasource1.kafka.consumer.group.id = testactin_1
+
+#指定channel为memory,即表示所有的数据都装进memory当中
+plactdef.channels.channel1.type = memory
+plactdef.channels.channel1.capacity = 2000000
+plactdef.channels.channel1.transactionCapacity = 30000
+plactdef.channels.channel1.byteCapacityBufferPercentage = 40
+plactdef.channels.channel1.byteCapacity = 2147483648
+#原始file roll sink
+plactdef.sinks.kafkasink1.type = file_roll
+plactdef.sinks.kafkasink1.channel = channel1
+plactdef.sinks.kafkasink1.sink.pathManager = default
+plactdef.sinks.kafkasink1.sink.pathManager.extension = dat
+plactdef.sinks.kafkasink1.sink.pathManager.prefix = active-
+plactdef.sinks.kafkasink1.sink.rollInterval = 10
+plactdef.sinks.kafkasink1.sink.directory = /home/{{ machine_host }}/ACTIVE-DEFENCE-EVENT-COMPLETED-LOG
+
+#拦截器批量设置
+#zx
+#plactdef.sources.kafkasource1.interceptors = i1 i4
+#plactdef.sources.kafkasource1.interceptors = i5 i6
+plactdef.sources.kafkasource1.interceptors = i6
+#拦截器-1-定位库
+plactdef.sources.kafkasource1.interceptors.i1.type = cn.ac.iie.flume.interceptor.FlumeIPAsnApp$FlumeIpAsnAppBuilder
+plactdef.sources.kafkasource1.interceptors.i1.ipDat = /home/dat/Kazakhstan.mmdb
+plactdef.sources.kafkasource1.interceptors.i1.v4Asn = /home/dat/asn_v4.mmdb
+plactdef.sources.kafkasource1.interceptors.i1.v6Asn = /home/dat/asn_v6.mmdb
+plactdef.sources.kafkasource1.interceptors.i1.serveripField = common_server_ip
+plactdef.sources.kafkasource1.interceptors.i1.clientipField = common_client_ip
+plactdef.sources.kafkasource1.interceptors.i1.serverlocatField = common_server_location
+plactdef.sources.kafkasource1.interceptors.i1.clientlocatField = common_client_location
+plactdef.sources.kafkasource1.interceptors.i1.serverasnField = common_server_asn
+plactdef.sources.kafkasource1.interceptors.i1.clientasnField = common_client_asn
+#plactdef.sources.kafkasource1.interceptors.i1.customipField = nocusipfield
+#plactdef.sources.kafkasource1.interceptors.i1.customlocatField = nocuslocatfield
+#plactdef.sources.kafkasource1.interceptors.i1.customasnField = nocusasnfield
+#拦截器-2-域名
+plactdef.sources.kafkasource1.interceptors.i2.type = cn.ac.iie.flume.interceptor.FlumeDomainApp$FlumeDomainAppBuilder
+plactdef.sources.kafkasource1.interceptors.i2.domainField = domain
+#拦截器-3-分布式ID与时间戳
+plactdef.sources.kafkasource1.interceptors.i3.type = cn.ac.iie.flume.interceptor.FlumeUidApp$FlumeUidAppBuilder
+plactdef.sources.kafkasource1.interceptors.i3.uId = uid
+plactdef.sources.kafkasource1.interceptors.i3.zookeeperIp = {{ machine_host }}:2181
+plactdef.sources.kafkasource1.interceptors.i3.kafkaTopic = SESSION-TEST-LOG
+plactdef.sources.kafkasource1.interceptors.i3.timeStamp = recv_time
+plactdef.sources.kafkasource1.interceptors.i3.dataCenterIdNum = 15
+#拦截器-4-app_label截取映射
+plactdef.sources.kafkasource1.interceptors.i4.type = cn.ac.iie.flume.interceptor.FlumeFieldSplitterApp$FlumeFieldSplitterAppBuilder
+plactdef.sources.kafkasource1.interceptors.i4.handleField = app_label
+plactdef.sources.kafkasource1.interceptors.i4.splitFields = proto:PROTO_ID;app:APP_ID;web:WEB_ID
+plactdef.sources.kafkasource1.interceptors.i4.fieldsSeparator = ;
+plactdef.sources.kafkasource1.interceptors.i4.fieldDelimiter = =
+#拦截器-5-avro反序列化
+plactdef.sources.kafkasource1.interceptors.i5.type = com.zdjizhi.flume.interceptor.FlumeAvroDeserialiApp$FlumeAvroDeserialiAppBuilder
+plactdef.sources.kafkasource1.interceptors.i5.avroSchemaUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/active_defence_event_log
+#拦截器-6-动态补全
+plactdef.sources.kafkasource1.interceptors.i6.type = com.zdjizhi.flume.interceptor.FlumeDynamicApp$FlumeDynamicAppBuilder
+plactdef.sources.kafkasource1.interceptors.i6.schemaHttpUrl = http://{{ machine_host }}:9999/metadata/schema/v1/fields/active_defence_event_log
+plactdef.sources.kafkasource1.interceptors.i6.uidZookeeperIp = {{ machine_host }}:2181
+plactdef.sources.kafkasource1.interceptors.i6.dataCenterIdNum = 5
+plactdef.sources.kafkasource1.interceptors.i6.ipDatPath = /home/dat
+plactdef.sources.kafkasource1.interceptors.i6.hbaseZookeeperIp = {{ machine_host }}:2181
+plactdef.sources.kafkasource1.interceptors.i6.hbaseTableName = subscriber_info

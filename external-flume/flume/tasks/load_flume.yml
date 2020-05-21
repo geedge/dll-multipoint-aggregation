@@ -1,0 +1,115 @@
+- name: stop and remove {{ image_container_name }} container
+  docker_container:
+    name: '{{ image_container_name }}'
+    state: absent
+
+- name: remove old {{ image_name }} image
+  docker_image:
+    name: '{{ image_name }}'
+    tag: '{{ image_tag_name }}'
+    state: absent
+
+- name: create {{ soft_home_path }}
+  file:
+    state: directory
+    path: '{{ soft_home_path }}'
+
+- name: create {{ volume_path }}
+  file:
+    state: directory
+    path: '{{ volume_path }}/tsg3.0-volumes/flume/{{ machine_host }}/CONNECTION-RECORD-COMPLETED-LOG'
+
+- name: create {{ volume_path }}
+  file:
+    state: directory
+    path: '{{ volume_path }}/tsg3.0-volumes/flume/{{ machine_host }}/PROXY-EVENT-COMPLETED-LOG'
+
+- name: create {{ volume_path }}
+  file:
+    state: directory
+    path: '{{ volume_path }}/tsg3.0-volumes/flume/{{ machine_host }}/ACTIVE-DEFENCE-EVENT-COMPLETED-LOG'
+
+- name: create {{ volume_path }}
+  file:
+    state: directory
+    path: '{{ volume_path }}/tsg3.0-volumes/flume/{{ machine_host }}/SECURITY-EVENT-COMPLETED-LOG'
+
+- name: create {{ volume_path }}
+  file:
+    state: directory
+    path: '{{ volume_path }}/tsg3.0-volumes/flume/{{ machine_host }}/TRAFFIC-METRICS-LOG'
+
+- name: copy {{ image_tar_name }}
+  copy:
+    src: '{{ images_path }}/{{ image_tar_name }}'
+    dest: '{{ soft_home_path }}/{{ image_tar_name }}'
+    force: true
+    backup: yes  
+  when: offline_install #离线模式从本地load文件加载
+
+- name: copy flume conf files
+  copy:
+    src: 'file/flume.tar'
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/flume.tar'
+    force: true
+    backup: yes
+
+- name: tar -zxvf flume.tar
+  shell: cd {{ volume_path }}/tsg3.0-volumes/flume/ && tar -zxvf flume.tar && rm -rf flume.tar
+
+- name: load new {{ image_name }} image from {{ image_tar_name }}
+  docker_image:
+    name: '{{ image_name }}'
+    tag: '{{ image_tag_name }}'
+    load_path: '{{ soft_home_path }}/{{ image_tar_name }}'
+    source: load
+    force_tag: yes
+    force_source: yes
+  when: offline_install #离线模式从本地load文件加载
+
+- name: load new {{ image_name }} image from docker-registry
+  docker_image:
+    name: '{{ docker_registry_image_and_tag }}'
+    source: pull
+    force_tag: yes
+    force_source: yes
+  when: offline_install==false #在线模式从docker-registry中pull镜像
+
+- name: copy  {{ image_name }} docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: '{{ soft_home_path }}/docker-compose.yml'
+    backup: yes
+
+- name: copy k2fConnRecord.properties.j2
+  template:
+    src: k2fConnRecord.properties.j2
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/conf/connRecordConf/k2fConnRecord.properties'
+    backup: yes
+
+- name: copy k2fProxyEvent.properties.j2
+  template:
+    src: k2fProxyEvent.properties.j2
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/conf/proxyEventConf/k2fProxyEvent.properties'
+    backup: yes
+
+- name: copy k2fTraffic.properties.j2
+  template:
+    src: k2fTraffic.properties.j2
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/conf/trafficMetricsConf/k2fTraffic.properties'
+    backup: yes
+
+- name: copy k2fSecEvent.properties.j2
+  template:
+    src: k2fSecEvent.properties.j2
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/conf/securityEventConf/k2fSecEvent.properties'
+    backup: yes
+
+- name: copy k2fActDef.properties.j2
+  template:
+    src: k2fActDef.properties.j2
+    dest: '{{ volume_path }}/tsg3.0-volumes/flume/conf/actDefConf/k2fActDef.properties'
+    backup: yes
+- name: start {{ image_container_name }} container
+  docker_compose:
+    project_src: '{{ soft_home_path }}'
