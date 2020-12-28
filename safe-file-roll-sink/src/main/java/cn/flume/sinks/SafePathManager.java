@@ -14,6 +14,7 @@ public class SafePathManager  {
     private File baseDirectory;
     private AtomicInteger fileIndex;
     private String filePrefix = "";
+    private static final String IN_USE_SUFFIX = ".tmp";
 
     private File currentFile;
 
@@ -24,7 +25,7 @@ public class SafePathManager  {
         //重新生成微秒级文件名
         seriesTimestamp = System.currentTimeMillis();
         fileIndex = new AtomicInteger();
-        currentFile = new File(baseDirectory, filePrefix + fileIndex.incrementAndGet() + "-" + seriesTimestamp );
+        currentFile = new File(baseDirectory, filePrefix + fileIndex.incrementAndGet() + "-" + seriesTimestamp + IN_USE_SUFFIX );
 
         return currentFile;
     }
